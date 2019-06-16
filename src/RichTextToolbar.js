@@ -50,7 +50,7 @@ export default class RichTextToolbar extends Component {
     };
   }
 
-  componentDidReceiveProps(newProps) {
+  componentWillReceiveProps(newProps) {
     const actions = newProps.actions ? newProps.actions : defaultActions;
     this.setState({
       actions,
@@ -105,12 +105,12 @@ export default class RichTextToolbar extends Component {
       <TouchableOpacity
           key={action}
           style={[
-            {height: 50, width: 50, justifyContent: 'center'},
+            styles.buttonIcon,
             selected ? this._getButtonSelectedStyle() : this._getButtonUnselectedStyle()
           ]}
           onPress={() => this._onPress(action)}
       >
-        {icon ? <Image source={icon} style={{tintColor: selected ? this.props.selectedIconTint : this.props.iconTint}}/> : null}
+        {icon ? <Image resizeMode="contain" source={icon} style={[styles.icon, { tintColor: selected ? this.props.selectedIconTint : this.props.iconTint}]}/> : null}
       </TouchableOpacity>
     );
   }
@@ -124,7 +124,7 @@ export default class RichTextToolbar extends Component {
   render() {
     return (
       <View
-          style={[{height: 50, backgroundColor: '#D3D3D3', alignItems: 'center'}, this.props.style]}
+          style={[styles.container, this.props.style]}
       >
         <ListView
             horizontal
@@ -185,6 +185,9 @@ export default class RichTextToolbar extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {height: 40, backgroundColor: '#D3D3D3', alignItems: 'center'},
+  buttonIcon: {height: 40, width: 40, justifyContent: 'center', alignItems: 'center'},
+  icon: {width: 20, height: 20},
   defaultSelectedButton: {
     backgroundColor: 'red'
   },
